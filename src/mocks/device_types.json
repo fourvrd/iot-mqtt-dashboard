@@ -1,0 +1,59 @@
+[
+  {
+    "type_id": "light_sensor",
+    "name": "Czujnik nasłonecznienia",
+    "values": [
+      {
+        "name": "Natężenie światła",
+        "type": "float",
+        "unit": "lx"
+      }
+    ]
+  },
+  {
+    "type_id": "door_window_sensor",
+    "name": "Czujnik otwarcia drzwi / okna",
+    "values": [
+      {
+        "name": "Wykryto otwarcie",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "type_id": "water_leak_sensor",
+    "name": "Czujnik zalania",
+    "values": [
+      {
+        "name": "Wykryto zalanie",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "type_id": "smoke_detector",
+    "name": "Czujnik dymu",
+    "values": [
+      {
+        "name": "Wykryto dym",
+        "type": "boolean"
+      }
+    ]
+  },
+  {
+    "type_id": "temperature_humidity_sensor",
+    "name": "Czujnik temperatury i wilgotności",
+    "values": [
+      {
+        "name": "Temperatura",
+        "type": "float",
+        "unit": "°C"
+      },
+      {
+        "name": "Wilgotność",
+        "type": "float",
+        "unit": "%"
+      }
+    ]
+  }
+]
