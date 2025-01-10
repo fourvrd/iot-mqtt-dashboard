@@ -16,7 +16,7 @@ export const DeviceCard: React.FC<DeviceCardProps> = ({ deviceType }) => {
   )[0];
 
   return (
-    <div className="bg-[#353535] rounded-3xl hover:shadow-2xl hover:scale-105 duration-200 hover:bg-[#3f3f3f] cursor-pointer">
+    <div className="bg-[#353535] rounded-3xl hover:shadow-xl hover:scale-105 duration-200 hover:bg-[#3f3f3f] cursor-pointer shadow-md">
       <div className="text-white text-lg font-bold border-b p-3 border-[#AEAEAE]">
         {device?.name}
       </div>
@@ -51,11 +51,11 @@ export const DeviceCard: React.FC<DeviceCardProps> = ({ deviceType }) => {
             </p>
             {value.type === "boolean" ? (
               Math.random() > 0.5 ? (
-                <p className="text-white font-semibold bg-green-700 px-2 py-1 rounded-full">
+                <p className="text-white font-semibold bg-green-700/65 px-2 py-1 rounded-full">
                   PRAWDA
                 </p>
               ) : (
-                <p className="text-white font-semibold bg-red-700 px-2 py-1 rounded-full">
+                <p className="text-white font-semibold bg-red-700/65 px-3 py-1 rounded-full">
                   FAŁSZ
                 </p>
               )
