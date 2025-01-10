@@ -1,15 +1,20 @@
+import React, { useState, useEffect, useRef } from "react";
 import deviceTypes from "../mocks/device_types.json";
 import lightSensorImg from "../assets/light_sensor.png";
 import doorWindowSensorImg from "../assets/door_window_sensor.png";
 import smokeDetectorImg from "../assets/smoke_detector.png";
 import waterLeakSensorImg from "../assets/water_leak_sensor.png";
 import temperatureHumiditySensorImg from "../assets/temperature_humidity_sensor.png";
+import classNames from "classnames";
 
 type DeviceCardProps = {
   brokerData?: { topic: string; message: string };
 };
 
 export const DeviceCard: React.FC<DeviceCardProps> = ({ brokerData }) => {
+  const [freshlyUpdated, setFreshlyUpdated] = useState(false);
+  const previousDataRef = useRef<string | null>(null);
+
   const deviceData = JSON.parse(brokerData?.message || "{}");
   const deviceSchema = deviceTypes.find(
     (device) => device.type_id === deviceData.device_type
@@ -19,8 +24,24 @@ export const DeviceCard: React.FC<DeviceCardProps> = ({ brokerData }) => {
     return Number.isInteger(value) ? value.toString() : value.toFixed(2);
   };
 
+  useEffect(() => {
+    if (
+      previousDataRef.current &&
+      previousDataRef.current !== brokerData?.message
+    ) {
+      setFreshlyUpdated(true);
+      setTimeout(() => setFreshlyUpdated(false), 1000);
+    }
+    previousDataRef.current = brokerData?.message || null;
+  }, [brokerData]);
+
   return (
-    <div className="bg-[#353535] rounded-3xl hover:shadow-xl hover:scale-105 duration-200 hover:bg-[#3f3f3f] cursor-pointer shadow-md">
+    <div
+      className={classNames(
+        "bg-[#353535] rounded-3xl hover:shadow-xl hover:scale-105 duration-200 hover:bg-[#3f3f3f] cursor-pointer shadow-md border",
+        freshlyUpdated ? "border-green-500" : "border-transparent"
+      )}
+    >
       <div className="border-b p-3 border-[#AEAEAE]">
         <p className="text-white text-lg font-bold">{deviceSchema?.name}</p>
         <p className="text-[#AEAEAE]">{deviceData.mac_addr}</p>
