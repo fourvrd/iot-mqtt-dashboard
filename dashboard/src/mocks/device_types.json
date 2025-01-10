@@ -6,7 +6,7 @@
       {
         "name": "Natężenie światła",
         "type": "float",
-        "unit": "lx"
+        "unit": "%"
       }
     ]
   },
@@ -15,7 +15,7 @@
     "name": "Czujnik otwarcia drzwi / okna",
     "values": [
       {
-        "name": "Wykryto otwarcie",
+        "name": "Otwarcie",
         "type": "boolean"
       }
     ]
@@ -25,7 +25,7 @@
     "name": "Czujnik zalania",
     "values": [
       {
-        "name": "Wykryto zalanie",
+        "name": "Zalanie",
         "type": "boolean"
       }
     ]
@@ -35,7 +35,7 @@
     "name": "Czujnik dymu",
     "values": [
       {
-        "name": "Wykryto dym",
+        "name": "Zadymienie",
         "type": "boolean"
       }
     ]

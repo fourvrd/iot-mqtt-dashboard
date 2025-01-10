@@ -1,17 +1,20 @@
 import { Navbar } from "./components/Navbar";
 import { DeviceCard } from "./components/DeviceCard";
-import deviceTypes from "./mocks/device_types.json";
 import mqtt from "mqtt";
 import { useEffect, useState } from "react";
 
+interface Payload {
+  topic: string;
+  message: string;
+}
+
 function App() {
   const [client, setClient] = useState<mqtt.MqttClient | null>(null);
-  const [connectStatus, setConnectStatus] = useState("Disconnected");
-  const [payload, setPayload] = useState<{ topic: string; message: string } | null>(null);
+  const [connectStatus, setConnectStatus] = useState("ROZŁĄCZONO");
+  const [payloads, setPayloads] = useState<Payload[]>([]);
   const host = "ws://localhost:9001";
 
   const mqttConnect = (host: string, mqttOption: mqtt.IClientOptions) => {
-    setConnectStatus("Connecting");
     const mqttClient = mqtt.connect(host, mqttOption);
     setClient(mqttClient);
   };
@@ -27,7 +30,7 @@ function App() {
     if (client) {
       client.on("connect", () => {
         console.log("Connected");
-        setConnectStatus("Connected");
+        setConnectStatus("POŁĄCZONO");
         client.subscribe("iot_devices/#", (err) => {
           if (err) {
             console.error("Subscription error: ", err);
@@ -43,17 +46,35 @@ function App() {
 
       client.on("reconnect", () => {
         console.log("Reconnecting");
-        setConnectStatus("Reconnecting");
+        setConnectStatus("ŁĄCZENIE");
       });
 
       client.on("disconnect", () => {
         console.warn("Disconnected");
-        setConnectStatus("Disconnected");
+        setConnectStatus("ROZŁĄCZONO");
       });
 
       client.on("message", (topic, message) => {
-        const payload = { topic, message: message.toString() };
-        setPayload(payload);
+        const messageStr = message.toString();
+        if (messageStr.trim() === "") {
+          setPayloads((prevPayloads) =>
+            prevPayloads.filter((payload) => payload.topic !== topic)
+          );
+        } else {
+          const newPayload = { topic, message: messageStr };
+          setPayloads((prevPayloads) => {
+            const index = prevPayloads.findIndex(
+              (payload) => payload.topic === topic
+            );
+            if (index !== -1) {
+              const updatedPayloads = [...prevPayloads];
+              updatedPayloads[index] = newPayload;
+              return updatedPayloads;
+            } else {
+              return [...prevPayloads, newPayload];
+            }
+          });
+        }
       });
     }
 
@@ -68,9 +89,17 @@ function App() {
     <div>
       <Navbar mqttStatus={connectStatus as string} />
       <div className="flex flex-wrap justify-center gap-5 p-10">
-        {deviceTypes.map((device) => (
+        {/* {deviceTypes.map((device) => (
           <DeviceCard key={device.type_id} deviceType={device.type_id} />
-        ))}
+        ))} */}
+        <div className="flex flex-wrap gap-5">
+          {payloads.map((payload, index) => (
+            <DeviceCard
+              key={index}
+              brokerData={payload}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
