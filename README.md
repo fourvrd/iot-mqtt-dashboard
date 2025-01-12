@@ -70,7 +70,7 @@ W tle pracuje również emulator urządzeń IoT napisany w Pythonie, który publ
 
 - #### Dynamiczne miganie ramek kart, sygnalizujące aktualizację stanu danego urządzenia
 
-  - Do tego również możemy użyć wszechstronnych hooków `useState`, `useRef` oraz `useEffect`:
+  - Do tego również możemy użyć wszechstronnych hooków `useState`, `useRef` oraz `useEffect`:\
 
   ```typescript
   useEffect(() => {
