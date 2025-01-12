@@ -1,7 +1,6 @@
 import paho.mqtt.client as mqtt
 import random
-import time
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 import asyncio
 
@@ -64,7 +63,7 @@ def generate_device_data(device_type, device_number):
         "device_type": device_type,
         "battery_level": state["battery_level"],
         "values": state["values"],
-        "timestamp": datetime.utcnow().isoformat() + "Z"
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
     return data
 
@@ -88,7 +87,7 @@ def clear_retained_messages(client):
 
 
 async def main():
-    client = mqtt.Client()
+    client = mqtt.Client(protocol=mqtt.MQTTv5)
     client.connect(BROKER, PORT, 60)
 
     clear_retained_messages(client)

@@ -97,7 +97,11 @@ export const DeviceCard: React.FC<DeviceCardProps> = ({ brokerData }) => {
                       ? formatValue(value * 100)
                       : formatValue(value)}{" "}
                   </p>
-                  <p>{deviceSchema?.values[index].unit}</p>
+                  {deviceSchema &&
+                    deviceSchema.values[index] &&
+                    "unit" in deviceSchema.values[index] && (
+                      <p>{deviceSchema.values[index].unit}</p>
+                    )}
                 </div>
               </div>
             ))

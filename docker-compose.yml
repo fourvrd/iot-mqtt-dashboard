@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  mqtt-broker:
+    image: eclipse-mosquitto
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt-broker/config:/mosquitto/config:ro
+    restart: unless-stopped
+    networks:
+      - iot-mqtt-dashboard-network
+
+  # devices-emulator:
+  #   image: devices-emulator
+  #   build:
+  #     context: .
+  #     dockerfile: ./devices-emulator/Dockerfile
+  #   container_name: devices-emulator
+  #   depends_on:
+  #     - mqtt-broker
+  #   restart: unless-stopped
+  #   networks:
+  #     - iot-mqtt-dashboard-network
+
+  dashboard:
+    image: dashboard
+    build:
+      context: ./
+      dockerfile: ./dashboard/Dockerfile
+    container_name: dashboard
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mqtt-broker
+      # - devices-emulator
+    restart: unless-stopped
+    networks:
+      - iot-mqtt-dashboard-network
+
+volumes:
+  config:
+
+networks:
+  iot-mqtt-dashboard-network:
+    name: iot-mqtt-dashboard-network
