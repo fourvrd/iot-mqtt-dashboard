@@ -16,8 +16,8 @@ services:
   devices-emulator:
     image: devices-emulator
     build:
-      context: .
-      dockerfile: ./devices-emulator/Dockerfile
+      context: devices-emulator
+      dockerfile: Dockerfile
     container_name: devices-emulator
     depends_on:
       - mqtt-broker
