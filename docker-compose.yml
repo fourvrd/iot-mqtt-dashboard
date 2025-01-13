@@ -5,8 +5,8 @@ services:
     image: eclipse-mosquitto
     container_name: mqtt-broker
     ports:
-      - "1883:1883"
-      - "9001:9001"
+      - "1883:1883" # for MQTT broker monitoring and debugging
+      - "9001:9001" # also
     volumes:
       - ./mqtt-broker/config:/mosquitto/config:ro
     restart: unless-stopped
