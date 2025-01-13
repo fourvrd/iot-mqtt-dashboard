@@ -13,17 +13,17 @@ services:
     networks:
       - iot-mqtt-dashboard-network
 
-  # devices-emulator:
-  #   image: devices-emulator
-  #   build:
-  #     context: .
-  #     dockerfile: ./devices-emulator/Dockerfile
-  #   container_name: devices-emulator
-  #   depends_on:
-  #     - mqtt-broker
-  #   restart: unless-stopped
-  #   networks:
-  #     - iot-mqtt-dashboard-network
+  devices-emulator:
+    image: devices-emulator
+    build:
+      context: .
+      dockerfile: ./devices-emulator/Dockerfile
+    container_name: devices-emulator
+    depends_on:
+      - mqtt-broker
+    restart: unless-stopped
+    networks:
+      - iot-mqtt-dashboard-network
 
   dashboard:
     image: dashboard
@@ -37,7 +37,7 @@ services:
       - "3000:3000"
     depends_on:
       - mqtt-broker
-      # - devices-emulator
+      - devices-emulator
     restart: unless-stopped
     networks:
       - iot-mqtt-dashboard-network

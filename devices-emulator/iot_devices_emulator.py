@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import json
 import asyncio
 
-BROKER = "localhost"
+BROKER = "mqtt-broker"
 PORT = 1883
 TOPIC = "iot_devices"
 
