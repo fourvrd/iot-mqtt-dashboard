@@ -28,8 +28,8 @@ services:
   dashboard:
     image: dashboard
     build:
-      context: ./
-      dockerfile: ./dashboard/Dockerfile
+      context: dashboard
+      dockerfile: Dockerfile
     container_name: dashboard
     environment:
       NODE_ENV: production
