@@ -28,6 +28,9 @@ Panel wyświetlający dane oraz statusy urządzeń IoT, które publikują inform
 
    ```bash
    git clone https://github.com/fourvrd/iot-mqtt-dashboard.git
+   ```
+
+   ```bash
    cd iot-mqtt-dashboard
    ```
 
@@ -35,6 +38,7 @@ Panel wyświetlający dane oraz statusy urządzeń IoT, które publikują inform
    ```bash
    docker compose up -d
    ```
+   > Po uruchomieniu się wszystkich kontenerów panel będzie dostępny pod adresem `localhost:3000`.
 3. Aby zatrzymać kontenery i usunąć ich woluminy (np. bazę danych brokera MQTT):
    ```bash
    docker compose down -v
@@ -71,6 +75,7 @@ W tle pracuje również emulator urządzeń IoT napisany w Pythonie, który publ
 - #### Dynamiczne miganie ramek kart, sygnalizujące aktualizację stanu danego urządzenia
 
   - Do tego również możemy użyć wszechstronnych hooków `useState`, `useRef` oraz `useEffect`:
+    &nbsp;
 
   ```typescript
   useEffect(() => {
